@@ -14,7 +14,7 @@ class CreateVotesTable extends Migration {
 		Schema::create('votes', function ($t)
 		{
 			$t->increments('id');
-			$t->integer('user_id')->unsigned();
+			$t->integer('user_id')->unsigned()->unique();
 			$t->foreign('user_id')->references('id')->on('users');
 
 			$t->integer('project_id')->unsigned();
