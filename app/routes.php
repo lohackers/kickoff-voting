@@ -11,7 +11,19 @@
 |
 */
 
-Route::get('/', function()
+// Authentication filter
+Route::filter('auth', function ()
 {
-	return View::make('hello');
+	if ( ! Session::has('access_token') || ! Session::has('user') )
+	{
+		return Redirect::route('auth');
+	}
+});
+
+Route::get('/auth', array('as' => 'auth', 'uses' => 'AuthController@index'));
+Route::get('/thanks', array('as' => 'thanks', 'uses' => 'VotesController@thanks'));
+
+Route::group(array('before' => 'auth'), function() {
+	Route::get('/', array('as' => 'all_votes', 'uses' => 'VotesController@index'));
+	Route::post('/', array('as' => 'create_vote', 'uses' => 'VotesController@create'));
 });
