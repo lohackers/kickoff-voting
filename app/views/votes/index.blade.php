@@ -1,6 +1,7 @@
 @extends('layout')
 
 @section('content')
+	<p>Sei loggato come  {{ $email }}</p>
 	@if (count($errors))
 	<p>Non hai selezionato un progetto!</p>
 	@endif

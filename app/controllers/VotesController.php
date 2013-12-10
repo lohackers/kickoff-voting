@@ -18,7 +18,7 @@ class VotesController extends \BaseController {
 			return Redirect::route('thanks');
 		}
 
-		return View::make('votes/index')->with(array('projects' => Project::all()));
+		return View::make('votes/index')->with(array('projects' => Project::all(), 'email' => $user['email']));
 	}
 
 	/**
