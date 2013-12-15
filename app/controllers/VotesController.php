@@ -72,8 +72,7 @@ class VotesController extends \BaseController {
 
 	public function thanks()
 	{
-		// TODO
-		return 'grazie!';
+		return View::make('votes/thanks');
 	}
 
 }
