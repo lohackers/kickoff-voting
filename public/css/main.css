@@ -1,0 +1,26 @@
+.project-list-item-radio {
+	display: none;
+}
+
+.project-list {
+	list-style: none;
+	padding: 0;
+}
+
+.project-list-item-label {
+	cursor: pointer;
+	display: block;
+	border: 1px solid;
+	margin-bottom: 1em;
+	padding: 1.5em;
+	border-radius: 4px;
+	font-size: 2em;
+}
+
+.project-list-item-radio:checked + label {
+	color: red;
+}
+
+.project-vote-button {
+	display: block;
+}
