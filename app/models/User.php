@@ -8,6 +8,11 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 	public $timestamps = false;
 	public static $unguarded = true;
 
+	public function vote()
+	{
+		return $this->hasOne('Vote');
+	}
+
 	/**
 	 * The database table used by the model.
 	 *
