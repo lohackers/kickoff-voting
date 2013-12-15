@@ -1,19 +1,42 @@
 @extends('layout')
 
 @section('content')
-	<p>Sei loggato come  {{ $email }}</p>
+	<div class="row col-xs-12">
+		<nav class="navbar navbar-default" role="navigation">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-4">
+					<span class="sr-only">Toggle navigation</span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="#">H-ART Makers Voting</a>
+			</div>
+			<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-4">
+				<p class="navbar-text">Signed in as <a href="mailto:{{ $email }}">{{ $email }}</a></p>
+			</div>
+		</nav>
+	</div>
+
 	@if (count($errors))
-	<p>Non hai selezionato un progetto!</p>
+		<div class="row col-xs-12">
+			<div class="alert alert-warning alert-dismissable">
+				<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+				<strong>Error!</strong> You must select a project.
+			</div>
+		</div>
 	@endif
-	{{ Form::open(array('url' => URL::route('create_vote'), 'method' => 'post')) }}
-		<ul class="project-list">
+
+	<div class="row col-xs-12">
+		{{ Form::open(array('url' => URL::route('create_vote'), 'method' => 'post')) }}
 			@foreach($projects as $project)
-				<li class="project-list-item">
-					{{ Form::radio('project_id', $project->id, '', array('class' => 'project-list-item-radio', 'id' => 'project_id_' . $project->id)) }}
-					{{ Form::label('project_id_' . $project->id, $project->name, array('class' => 'project-list-item-label')) }}
-				</li>
+				<div class="radio">
+					<label>
+						{{ Form::radio('project_id', $project->id) }} {{ $project->name }}
+					</label>
+				</div>
 			@endforeach
-		</ul>
-		{{ Form::submit('Vota!', array('class' => 'btn btn-primary project-vote-button')) }}
-	{{ Form::close() }}
+			{{ Form::submit('Vote!', array('class' => 'btn btn-primary btn-block')) }}
+		{{ Form::close() }}
+	</div>
 @stop

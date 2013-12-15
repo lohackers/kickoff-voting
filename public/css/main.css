@@ -1,26 +1,9 @@
-.project-list-item-radio {
-	display: none;
+.row {
+	margin: 0;
 }
 
-.project-list {
-	list-style: none;
-	padding: 0;
-}
-
-.project-list-item-label {
-	cursor: pointer;
-	display: block;
-	border: 1px solid;
-	margin-bottom: 1em;
-	padding: 1.5em;
-	border-radius: 4px;
-	font-size: 2em;
-}
-
-.project-list-item-radio:checked + label {
-	color: red;
-}
-
-.project-vote-button {
-	display: block;
+@media only screen and (max-width: 768px) {
+	.container {
+		padding: 0;
+	}
 }
