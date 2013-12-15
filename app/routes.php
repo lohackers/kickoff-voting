@@ -20,6 +20,13 @@ Route::filter('auth', function ()
 	}
 });
 
+// Get winner
+Route::get('winner', function ()
+{
+	return View::make('projects/winner')
+		->with('projects', Project::with('votes')->get());
+});
+
 Route::get('/auth', array('as' => 'auth', 'uses' => 'AuthController@index'));
 Route::get('/thanks', array('as' => 'thanks', 'uses' => 'VotesController@thanks'));
 
