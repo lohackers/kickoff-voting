@@ -1,0 +1,56 @@
+SSH_HOST1=54.247.116.89
+
+
+SSH_USER=voting
+WEB_DIR=/var/www/voting/htdocs/
+
+all:
+	php artisan
+
+compass-clean:
+#	compass clean
+#	compass compile
+
+artisan-down:
+	ssh ${SSH_USER}@${SSH_HOST1} "cd ${WEB_DIR}; php artisan down"
+
+
+rsynca:
+	rsync -arvuz --delete . ${SSH_USER}@${SSH_HOST1}:${WEB_DIR}  --exclude-from 'exclude-list.txt'
+
+
+fixperm-logs:
+	ssh ${SSH_USER}@${SSH_HOST1} "mkdir -p ${WEB_DIR}app/storage/logs; chmod -R ugo+w ${WEB_DIR}app/storage/logs"
+
+fixperm:
+	ssh ${SSH_USER}@${SSH_HOST1} "mkdir -p ${WEB_DIR}app/storage; chmod -R ugo+w ${WEB_DIR}app/storage"
+	ssh ${SSH_USER}@${SSH_HOST1} "mkdir -p ${WEB_DIR}app/storage/cache; chmod -R ugo+w ${WEB_DIR}app/storage/cache"
+	ssh ${SSH_USER}@${SSH_HOST1} "mkdir -p ${WEB_DIR}app/storage/logs; chmod -R ugo+w ${WEB_DIR}app/storage/logs"
+	ssh ${SSH_USER}@${SSH_HOST1} "mkdir -p ${WEB_DIR}app/storage/meta; chmod -R ugo+w ${WEB_DIR}app/storage/meta"
+	ssh ${SSH_USER}@${SSH_HOST1} "mkdir -p ${WEB_DIR}app/storage/sessions; chmod -R ugo+w ${WEB_DIR}app/storage/sessions"
+	ssh ${SSH_USER}@${SSH_HOST1} "mkdir -p ${WEB_DIR}app/storage/view; chmod -R ugo+w ${WEB_DIR}app/storage/view"
+
+
+migrate:
+	ssh ${SSH_USER}@${SSH_HOST1} "cd ${WEB_DIR}; php artisan migrate --env=production"
+
+migrate-seed:
+	ssh ${SSH_USER}@${SSH_HOST1} "cd ${WEB_DIR}; php artisan migrate --env=production --seed"
+
+artisan-up:
+	ssh ${SSH_USER}@${SSH_HOST1} "cd ${WEB_DIR}; php artisan up"
+
+
+first-deploy: compass-clean rsynca fixperm-logs migrate-seed
+
+deploy: compass-clean artisan-down rsynca fixperm-logs migrate artisan-up
+
+test:
+	phpunit --colors --verbose
+
+clean:
+	php artisan clear-compiled
+	php artisan optimize
+	php artisan cache:clear
+	php artisan twig:clean
+

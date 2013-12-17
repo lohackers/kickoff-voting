@@ -29,6 +29,7 @@ $app->redirectIfTrailingSlash();
 $env = $app->detectEnvironment(array(
 
 	'local' => array('localhost'),
+  'production' => array('voting.h-art.com'),
 
 ));
 

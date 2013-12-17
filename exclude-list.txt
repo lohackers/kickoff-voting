@@ -1,0 +1,11 @@
+.git
+nohup.out
+Makefile
+composer.phar
+.sass-cache/
+app/storage/logs/*
+app/storage/cache/*
+app/storage/meta/*
+app/storage/sessions/*
+app/storage/views/*
+app/storage/views_OLD/*
