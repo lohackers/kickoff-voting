@@ -16,7 +16,7 @@ artisan-down:
 
 
 rsynca:
-	rsync -ltrvuz --delete . ${SSH_USER}@${SSH_HOST1}:${WEB_DIR}  --exclude-from 'exclude-list.txt'
+	rsync -arvuz --delete . ${SSH_USER}@${SSH_HOST1}:${WEB_DIR}  --exclude-from 'exclude-list.txt'
 
 setacl:
 	ssh ${SSH_USER}@${SSH_HOST1} "setfacl -R -m u:www-data:rwX -m u:${SSH_USER}:rwX ${WEB_DIR}app/storage"
