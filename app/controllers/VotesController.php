@@ -9,18 +9,14 @@ class VotesController extends \BaseController {
 	 */
 	public function index()
 	{
-		$user = Session::get('user');
-		$user_id = User::where('email', '=', $user['email'])->first()->id;
-
-		if ( Vote::where('user_id', '=', $user_id)->count() )
+		if ( Session::has('user') )
 		{
 			// user already voted
 			return Redirect::route('thanks');
 		}
 
 		return View::make('votes/index')->with(array(
-			'projects' => Project::all(),
-			'email' => $user['email']
+			'projects' => Project::all()
 		));
 	}
 
@@ -34,8 +30,11 @@ class VotesController extends \BaseController {
 		try
 		{
 			// get user info
-			$user = Session::get('user');
-			$user_id = User::where('email', '=', $user['email'])->first()->id;
+			if ( Session::get('user') )
+			{
+				// Already voted
+				return View::make('votes/thanks');
+			}
 
 			// create vote validator
 			$validator = Validator::make(Input::except('_token'), array(
@@ -46,14 +45,15 @@ class VotesController extends \BaseController {
 			if ( $validator->fails() )
 			{
 				return Redirect::action('VotesController@index')->with(array(
-					'errors' => $validator->messages(),
-					'email' => $user['email']
+					'errors' => $validator->messages()
 				));
 			}
 
+			// set session
+			Session::put('user', true);
+
 			// create the vote
 			Vote::create(array(
-				'user_id' => $user_id,
 				'project_id' => Input::get('project_id')
 			));
 
@@ -64,8 +64,7 @@ class VotesController extends \BaseController {
 			// error creating vote
 			return View::make('votes/index')->with(array(
 				'errors' => 'Errore nel voto',
-				'projects' => Project::all(),
-				'email' => $user['email']
+				'projects' => Project::all()
 			));
 		}
 	}

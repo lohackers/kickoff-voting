@@ -14,9 +14,9 @@
 // Authentication filter
 Route::filter('auth', function ()
 {
-	if ( ! Session::has('access_token') || ! Session::has('user') )
+	if ( Session::has('user') )
 	{
-		return Redirect::route('auth');
+		return Redirect::route('thanks');
 	}
 });
 
@@ -27,7 +27,6 @@ Route::get('winner', function ()
 		->with('projects', Project::with('votes')->get());
 });
 
-Route::get('/auth', array('as' => 'auth', 'uses' => 'AuthController@index'));
 Route::get('/thanks', array('as' => 'thanks', 'uses' => 'VotesController@thanks'));
 
 Route::group(array('before' => 'auth'), function() {
