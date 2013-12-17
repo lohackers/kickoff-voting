@@ -16,8 +16,11 @@ artisan-down:
 
 
 rsynca:
-	rsync -arvuz --delete . ${SSH_USER}@${SSH_HOST1}:${WEB_DIR}  --exclude-from 'exclude-list.txt'
+	rsync -ltrvuz --delete . ${SSH_USER}@${SSH_HOST1}:${WEB_DIR}  --exclude-from 'exclude-list.txt'
 
+setacl:
+	ssh ${SSH_USER}@${SSH_HOST1} "setfacl -R -m u:www-data:rwX -m u:${SSH_USER}:rwX ${WEB_DIR}app/storage"
+	ssh ${SSH_USER}@${SSH_HOST1} "setfacl -dR -m u:www-data:rwX -m u:${SSH_USER}:rwX ${WEB_DIR}app/storage"
 
 fixperm-logs:
 	ssh ${SSH_USER}@${SSH_HOST1} "mkdir -p ${WEB_DIR}app/storage/logs; chmod -R ugo+w ${WEB_DIR}app/storage/logs"
@@ -41,7 +44,7 @@ artisan-up:
 	ssh ${SSH_USER}@${SSH_HOST1} "cd ${WEB_DIR}; php artisan up"
 
 
-first-deploy: compass-clean rsynca fixperm-logs migrate-seed
+first-deploy: compass-clean rsynca fixperm-logs setacl migrate-seed
 
 deploy: compass-clean artisan-down rsynca fixperm-logs migrate artisan-up
 
