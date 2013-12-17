@@ -10,9 +10,4 @@ class Vote extends Eloquent {
 		return $this->belongsTo('Project');
 	}
 
-	public function user()
-	{
-		return $this->belongsTo('User');
-	}
-
 }
