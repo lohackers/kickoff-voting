@@ -1,10 +1,11 @@
 @extends('layout')
 
 @section('content')
-	<div class="row col-xs-12">
-		<h1>Vote result</h1>
-		<div class="jumbotron">
-			<h2>You voted.<br>Thanks ;)</h2>
+	<div class="has-header has-subheader content padding">
+		<div class="card">
+			<div class="item item-text-wrap">
+				Thanks for voting ;)
+			</div>
 		</div>
 	</div>
 @stop
