@@ -10,11 +10,17 @@
 	<div class="bar bar-header bar-light">
 		<h1 class="title">Kickoff 2013</h1>
 	</div>
-	<div class="bar bar-subheader">
-		<h2 class="title">Makers voting</h2>
-	</div>
-	<div class="container">
-		@yield('content')
-	</div>
+
+	@if (count($errors))
+		<div class="bar bar-subheader bar-energized">
+			<h2 class="title">You must select one project!</h2>
+		</div>
+	@else
+		<div class="bar bar-subheader">
+			<h2 class="title">Makers voting</h2>
+		</div>
+	@endif
+
+	@yield('content')
 </body>
 </html>

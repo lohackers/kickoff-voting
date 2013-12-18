@@ -1,16 +1,7 @@
 @extends('layout')
 
 @section('content')
-	<div class="has-header has-subheader content padding">
-
-		@if (count($errors))
-			<div class="card">
-				<div class="item item-text-wrap" style="background:#F0B840;color:#FFF;font-weight:bold;">
-					You must select one project!
-				</div>
-			</div>
-		@endif
-
+	<div class="has-header has-subheader content padding scroll overflow-scroll">
 		{{ Form::open(array('url' => URL::route('create_vote'), 'method' => 'post')) }}
 			<div class="list">
 				@foreach($projects as $project)
