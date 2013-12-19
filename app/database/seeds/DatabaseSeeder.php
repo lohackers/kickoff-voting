@@ -20,13 +20,13 @@ class ProjectTableSeeder extends Seeder {
 	public function run()
 	{
 		Project::create(array(
-			'name' => 'Progetto numero 1'
+			'name' => 'Tokame'
 		));
 		Project::create(array(
-			'name' => 'Progetto numero 2'
+			'name' => 'Recycool'
 		));
 		Project::create(array(
-			'name' => 'Progetto numero 3'
+			'name' => 'Namaste'
 		));
 	}
 }
